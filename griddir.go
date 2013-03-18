@@ -1,20 +1,4 @@
-/*
-Package gridfs implements net/http.FileSystem to serve
-contents directly from MongoDB's GridFS.
-
-To serve all files from a database containing a GridFS
-called `fs` via http:
-
-	session, err := mgo.Dial("mongodb://localhost/database")
-	if err != nil {
-		log.Fatalf("Could not connect to mongodb: %s", err)
-	}
-	gfs := session.DB("").GridFS("fs")
-	http.Handle("/", http.FileServer(sabercat.GridDir{gfs})
-
-Directory listing has not been implemented.
-*/
-package gridfs
+package kartoffelsack
 
 import (
 	"labix.org/v2/mgo"
@@ -26,7 +10,20 @@ const (
 	VERSION = "1.4.3"
 )
 
-// GridDir is the GridFS pendant to `http.Dir`.
+// GridDir implements net/http.FileSystem to serve
+// contents directly from MongoDB's GridFS.
+//
+// To serve all files from a database containing a GridFS
+// called `fs` via http:
+//
+//     session, err := mgo.Dial("mongodb://localhost/database")
+//     if err != nil {
+//         log.Fatalf("Could not connect to mongodb: %s", err)
+//     }
+//     gfs := session.DB("").GridFS("fs")
+//     http.Handle("/", http.FileServer(sabercat.GridDir{gfs})
+//
+// Directory listing has not been implemented.
 type GridDir struct {
 	GridFS *mgo.GridFS
 	// If true, the leading slash will be stripped from requests

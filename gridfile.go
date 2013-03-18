@@ -1,4 +1,4 @@
-package gridfs
+package kartoffelsack
 
 import (
 	"fmt"
