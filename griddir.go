@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-const (
-	VERSION = "1.4.3"
-)
-
 // GridDir implements net/http.FileSystem to serve
 // contents directly from MongoDB's GridFS.
 //
