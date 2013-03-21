@@ -7,4 +7,4 @@ please consult the [included documentation][1].
 
 [1]: http://godoc.org/github.com/voxelbrain/kartoffelsack
 ---
-Version 0.0.3
+Version 0.0.4
