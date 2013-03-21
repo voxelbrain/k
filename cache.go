@@ -12,7 +12,7 @@ import (
 
 const (
 	// Per default items up to 20 Mibibytes in size will be cached
-	DEFAULT_MAX_CACHEABLE_SIZE = 20 * (1 << 10 * 2)
+	DEFAULT_MAX_CACHEABLE_SIZE = 20 * (1 << (10 * 2))
 )
 
 // Cache is a `net/http.Handler`, which uses `net/http/httptest.ResponseRecorder`
@@ -36,11 +36,11 @@ type Cache struct {
 // handler for the given duration.
 func NewCache(d time.Duration, handler http.Handler) *Cache {
 	return &Cache{
-		TTL:             d,
-		Handler:         handler,
+		TTL:              d,
+		Handler:          handler,
 		MaxCacheableSize: DEFAULT_MAX_CACHEABLE_SIZE,
-		mutex:           &sync.RWMutex{},
-		cache:           make(map[string]*httptest.ResponseRecorder),
+		mutex:            &sync.RWMutex{},
+		cache:            make(map[string]*httptest.ResponseRecorder),
 	}
 }
 
