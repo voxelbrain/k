@@ -1,4 +1,4 @@
-package kartoffelsack
+package katalysator
 
 import (
 	"net/http"
