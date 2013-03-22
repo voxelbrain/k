@@ -1,4 +1,4 @@
-package kartoffelsack
+package katalysator
 
 import (
 	"labix.org/v2/mgo"
