@@ -1,4 +1,4 @@
-package kartoffelsack
+package k
 
 import (
 	"net/http"

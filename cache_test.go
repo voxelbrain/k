@@ -1,4 +1,4 @@
-package kartoffelsack
+package k
 
 import (
 	"fmt"
@@ -28,7 +28,7 @@ type TableTest struct {
 var (
 	tests = map[string]TableTest{
 		"Caching": TableTest{
-			Handler: NewDummyDataHandler(DATA_LENGTH, DATA_LENGTH, 200),
+			Handler:      NewDummyDataHandler(DATA_LENGTH, DATA_LENGTH, 200),
 			RequestCount: 1,
 			Responses: []Response{
 				{
@@ -64,25 +64,25 @@ var (
 			},
 		},
 		"ServerWriteAbort": TableTest{
-			Handler: NewDummyDataHandler(DATA_LENGTH, DATA_LENGTH/2, 200),
+			Handler:      NewDummyDataHandler(DATA_LENGTH, DATA_LENGTH/2, 200),
 			RequestCount: 2,
 			Responses: []Response{
 				{
 					Header: map[string]string{
 						"Content-Length": fmt.Sprintf("%d", DATA_LENGTH),
 					},
-					BodyLength: DATA_LENGTH/2,
+					BodyLength: DATA_LENGTH / 2,
 				},
 				{
 					Header: map[string]string{
 						"Content-Length": fmt.Sprintf("%d", DATA_LENGTH),
 					},
-					BodyLength: DATA_LENGTH/2,
+					BodyLength: DATA_LENGTH / 2,
 				},
 			},
 		},
 		"CacheOnly200": TableTest{
-			Handler: NewDummyDataHandler(DATA_LENGTH, DATA_LENGTH, 201),
+			Handler:      NewDummyDataHandler(DATA_LENGTH, DATA_LENGTH, 201),
 			RequestCount: 2,
 			Responses: []Response{
 				{
@@ -99,21 +99,21 @@ var (
 				},
 			},
 		},
-		"AboveCacheLimit": TableTest {
-			Handler: NewDummyDataHandler(DEFAULT_MAX_CACHEABLE_SIZE+1, DEFAULT_MAX_CACHEABLE_SIZE+1, 200),
+		"AboveCacheLimit": TableTest{
+			Handler:      NewDummyDataHandler(DEFAULT_MAX_CACHEABLE_SIZE+1, DEFAULT_MAX_CACHEABLE_SIZE+1, 200),
 			RequestCount: 2,
 			Responses: []Response{
 				{
 					Header: map[string]string{
 						"Content-Length": fmt.Sprintf("%d", DEFAULT_MAX_CACHEABLE_SIZE+1),
 					},
-					BodyLength: DEFAULT_MAX_CACHEABLE_SIZE+1,
+					BodyLength: DEFAULT_MAX_CACHEABLE_SIZE + 1,
 				},
 				{
 					Header: map[string]string{
 						"Content-Length": fmt.Sprintf("%d", DEFAULT_MAX_CACHEABLE_SIZE+1),
 					},
-					BodyLength: DEFAULT_MAX_CACHEABLE_SIZE+1,
+					BodyLength: DEFAULT_MAX_CACHEABLE_SIZE + 1,
 				},
 			},
 		},
