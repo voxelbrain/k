@@ -1,4 +1,4 @@
-package katalysator
+package k
 
 import (
 	"bytes"

@@ -1,4 +1,4 @@
-package katalysator
+package k
 
 import (
 	"labix.org/v2/mgo"
