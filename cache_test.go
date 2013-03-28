@@ -130,7 +130,7 @@ func (rc *RequestCounterHandler) ServeHTTP(w http.ResponseWriter, r *http.Reques
 	rc.Handler.ServeHTTP(w, r)
 }
 
-func TestTable(t *testing.T) {
+func TestCache_table(t *testing.T) {
 	for name, test := range tests {
 		t.Logf("Running %s...", name)
 		rc := &RequestCounterHandler{Handler: test.Handler}
