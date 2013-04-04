@@ -1,9 +1,14 @@
 package k
 
 import (
+	"log"
 	"net/url"
 	"os"
 )
+
+func init() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+}
 
 // MustURL calls net/url.Parse() and panics if it returns a non-nil
 // error. Useful for URL constants.
