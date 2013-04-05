@@ -3,3 +3,7 @@
 //
 // See: github.com/bitly/nsq
 package knsq
+
+const (
+	VERSION = "0.2.0"
+)
