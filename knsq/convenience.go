@@ -4,24 +4,37 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 )
 
-// FIXME: Use socket API instead of HTTP
+// TODO: Add socket implementation
 
-// CreateTopic makes sure a topic exists on the given nsqd.
-func CreateTopic(nsqd string, topic string) error {
-	resp, err := http.Get("http://" + nsqd + "/create_topic?topic=" + topic)
+type Client interface {
+	// CreateTopic makes sure a topic exists on the given nsqd.
+	CreateTopic(topic string) error
+	// Send sends a message on a topic to the specified nsqd.
+	Send(topic string, body io.Reader)
+}
+
+// HttpClient implements the Client interface using HTTP requests
+type HttpClient struct {
+	*url.URL
+}
+
+func (h HttpClient) CreateTopic(topic string) error {
+	resp, err := http.Get(h.String() + "/create_topic?topic=" + topic)
 	if resp != nil && resp.Body != nil {
 		resp.Body.Close()
 	}
 	return err
 }
 
-// Send sends a message on a topic to the specified nsqd.
-func Send(nsqd string, topic string, body io.Reader) error {
-	reqURL := nsqd + "/put?topic=" + topic
+func (h HttpClient) Send(topic string, body io.Reader) error {
+	reqURL := h.String() + "/put?topic=" + topic
 	log.Printf("Sending %s message to: %s", topic, reqURL)
 	resp, err := http.DefaultClient.Post(reqURL, "application/json", body)
-	defer resp.Body.Close()
+	if resp != nil && resp.Body != nil {
+		defer resp.Body.Close()
+	}
 	return err
 }
