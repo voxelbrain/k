@@ -1,4 +1,4 @@
-Package katalysator is a bag of small, uncategorized code  supposed
+Package k(atalysator) is a bag of small, uncategorized code supposed
 to ease the development of applications in go.
 
 It would be tedious to maintain an overview in this README. For details,
