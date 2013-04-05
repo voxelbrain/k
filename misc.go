@@ -2,6 +2,7 @@ package k
 
 import (
 	"log"
+	"net"
 	"net/url"
 	"os"
 )
@@ -13,7 +14,7 @@ func init() {
 // FIXME: Make Must* functions consistent
 
 // MustURL calls net/url.Parse() and panics if it returns a non-nil
-// error. Useful for URL constants.
+// error.
 func MustURL(rawurl string) *url.URL {
 	u, err := url.Parse(rawurl)
 	if err != nil {
@@ -39,4 +40,15 @@ func DefaultEnv(key, def string) string {
 		return val
 	}
 	return def
+}
+
+// MustTCPAddr calls net.ResolveTCPAddr and panics if it returns
+// a non-nil error.
+func MustTCPAddr(rawaddr string) *net.TCPAddr {
+	addr, err := net.ResolveTCPAddr("tcp", rawaddr)
+	if err != nil {
+		panic(err)
+	}
+
+	return addr
 }
