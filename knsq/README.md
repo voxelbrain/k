@@ -11,4 +11,4 @@ of namespacing and dependency reduction.
 [1]: http://godoc.org/github.com/voxelbrain/k/knsq
 [2]: http://github.com/bitly/nsq
 ---
-Version 0.2.0
+Version 0.3.0
