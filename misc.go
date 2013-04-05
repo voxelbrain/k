@@ -52,3 +52,12 @@ func MustTCPAddr(rawaddr string) *net.TCPAddr {
 
 	return addr
 }
+
+// Hostname returns def if no hostname could be determined
+// for this machine, the machine's hostname otherwise.
+func Hostname(def string) string {
+	if hostname, err := os.Hostname(); err == nil {
+		return hostname
+	}
+	return def
+}
