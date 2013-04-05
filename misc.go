@@ -1,9 +1,16 @@
 package k
 
 import (
+	"log"
 	"net/url"
 	"os"
 )
+
+func init() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+}
+
+// FIXME: Make Must* functions consistent
 
 // MustURL calls net/url.Parse() and panics if it returns a non-nil
 // error. Useful for URL constants.
@@ -13,6 +20,15 @@ func MustURL(rawurl string) *url.URL {
 		panic(err)
 	}
 	return u
+}
+
+// MustBytes is a function which usually wraps functions which return
+// a byte slice and an error. It panics, if the given error is not nil.
+func MustBytes(data []byte, err error) []byte {
+	if err != nil {
+		panic(err)
+	}
+	return data
 }
 
 // DefaultEnv returns the value of an environment variable, provided
