@@ -34,3 +34,12 @@ func AttachHandler(topic, channel string, lookupd string, handler nsq.Handler) e
 	mountReader.AddHandler(handler)
 	return mountReader.ConnectToLookupd(lookupd)
 }
+
+// AttachEphemeralHandler create a new nsq.Reader for a topic and attaches the
+// given handler to it. The nsq channel to which the handler gets attached
+// will be ephemeral. Ephemeral channels will not be buffered to disk and may
+// drop messages. Ephemeral channels will also not be persisted after its
+// last client disconnects.
+func AttachEphemeralHandler(topic, channel, lookupd string, handler nsq.Handler) error {
+	return AttachHandler(topic, channel + "#ephemeral", lookupd, handler)
+}
