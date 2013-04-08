@@ -41,5 +41,9 @@ func AttachHandler(topic, channel string, lookupd string, handler nsq.Handler) e
 // drop messages. Ephemeral channels will also not be persisted after its
 // last client disconnects.
 func AttachEphemeralHandler(topic, channel, lookupd string, handler nsq.Handler) error {
-	return AttachHandler(topic, channel + "#ephemeral", lookupd, handler)
+	ephSuffix := "#ephemeral"
+	if (len(channel) + len(ephSuffix) > 32) {
+		channel = channel[:32 - len(ephSuffix)]
+	}
+	return AttachHandler(topic, channel + ephSuffix, lookupd, handler)
 }
