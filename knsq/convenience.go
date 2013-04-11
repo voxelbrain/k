@@ -2,12 +2,15 @@ package knsq
 
 import (
 	"io"
+	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
 	"net/url"
-)
+	"os"
 
-// TODO: Add socket implementation
+	"github.com/bitly/nsq/nsq"
+)
 
 type Client interface {
 	// CreateTopic makes sure a topic exists on the given nsqd.
@@ -37,4 +40,36 @@ func (h HttpClient) Send(topic string, body io.Reader) error {
 		defer resp.Body.Close()
 	}
 	return err
+}
+
+// TODO: Does this thing need to be thread-safe?
+type rwcClient struct {
+	io.ReadWriteCloser
+}
+
+// NewTCPClient creates an implementation of the Client interface
+// using the TCP API of NSQd.
+func NewTCPClient(addr string) (Client, error) {
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = c.Write(nsq.MagicV2)
+	return &rwcClient{c}, err
+}
+
+func (c *rwcClient) CreateTopic(topic string) error {
+	// FIXME: This is awful. NSQd has no command to create a topic
+	// except via the HTTP API. Needs patching.
+	cmd := nsq.Publish(topic, []byte("dummymsg"))
+	return cmd.Write(c)
+}
+
+func (c *rwcClient) Send(topic string, body io.Reader) error {
+	buf, err := ioutil.ReadAll(body)
+	if err != nil {
+		return err
+	}
+	cmd := nsq.Publish(topic, buf)
+	return cmd.Write(c)
 }
