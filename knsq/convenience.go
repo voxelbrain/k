@@ -13,10 +13,10 @@ type Client interface {
 	// CreateTopic makes sure a topic exists on the given nsqd.
 	CreateTopic(topic string) error
 	// Send sends a message on a topic to the specified nsqd.
-	Send(topic string, body io.Reader)
+	Send(topic string, body io.Reader) error
 }
 
-// HttpClient implements the Client interface using HTTP requests
+// HttpClient implements the Client interface using HTTP requests.
 type HttpClient struct {
 	*url.URL
 }
