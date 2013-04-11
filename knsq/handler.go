@@ -42,8 +42,8 @@ func AttachHandler(topic, channel string, lookupd string, handler nsq.Handler) e
 // last client disconnects.
 func AttachEphemeralHandler(topic, channel, lookupd string, handler nsq.Handler) error {
 	ephSuffix := "#ephemeral"
-	if (len(channel) + len(ephSuffix) > 32) {
-		channel = channel[:32 - len(ephSuffix)]
+	if len(channel)+len(ephSuffix) > 32 {
+		channel = channel[:32-len(ephSuffix)]
 	}
-	return AttachHandler(topic, channel + ephSuffix, lookupd, handler)
+	return AttachHandler(topic, channel+ephSuffix, lookupd, handler)
 }
