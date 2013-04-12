@@ -46,8 +46,8 @@ func (h HttpClient) Send(topic string, body io.Reader) error {
 // TODO: Does this thing need to be thread-safe?
 type rwcClient struct {
 	io.ReadWriteCloser
-	read  chan string
-	write chan *nsq.Command
+	read   chan string
+	write  chan *nsq.Command
 	manage chan *manageRequest
 }
 
@@ -60,7 +60,7 @@ func NewTCPClient(addr string) (Client, error) {
 	}
 
 	_, err = c.Write(nsq.MagicV2)
-	client := &rwcClient{ReadWriteCloser: c, read: make(chan string), write: make(chan *nsq.Command), manage: make(chan *manageRequest) }
+	client := &rwcClient{ReadWriteCloser: c, read: make(chan string), write: make(chan *nsq.Command), manage: make(chan *manageRequest)}
 
 	go client.readLoop()
 	go client.writeLoop()
