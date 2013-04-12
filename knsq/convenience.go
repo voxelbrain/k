@@ -76,7 +76,7 @@ func (c *rwcClient) readLoop() {
 			log.Printf("ReadResponse returned: %v", err)
 			break
 		}
-		resp = resp[4:] // trim initial zero-bytes.
+		_, resp, err = nsq.UnpackResponse(resp)
 		if bytes.Equal(resp, []byte("_heartbeat_")) {
 			c.write <- nsq.Nop()
 			continue
