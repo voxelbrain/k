@@ -1,6 +1,7 @@
 package k
 
 import (
+	"encoding/json"
 	"log"
 	"net"
 	"net/url"
@@ -60,4 +61,14 @@ func Hostname(def string) string {
 		return hostname
 	}
 	return def
+}
+
+// JsonRemarshal takes old, marshals it into json and unmarshals it
+// into new. If an error occurs along the way, it is returned.
+func JsonRemarshal(new interface{}, old interface{}) error {
+	data, err := json.Marshal(old)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(data, new)
 }
