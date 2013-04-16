@@ -62,11 +62,15 @@ func NewTCPClient(addr string) (Client, error) {
 	_, err = c.Write(nsq.MagicV2)
 	client := &rwcClient{ReadWriteCloser: c, read: make(chan string), write: make(chan *nsq.Command), manage: make(chan *manageRequest)}
 
-	go client.readLoop()
-	go client.writeLoop()
-	go client.manageLoop()
+	go client.loop()
 
 	return client, err
+}
+
+func (c *rwcClient) loop() {
+	go c.readLoop()
+	go c.writeLoop()
+	go c.manageLoop()
 }
 
 func (c *rwcClient) readLoop() {
@@ -108,7 +112,7 @@ func (c *rwcClient) manageLoop() {
 func (c *rwcClient) CreateTopic(topic string) error {
 	// FIXME: This is awful. NSQd has no command to create a topic
 	// except via the HTTP API. Needs patching.
-	cmd := nsq.Publish(topic, []byte("dummymsg"))
+	cmd := nsq.Publish(topic, []byte{})
 
 	respchan := make(chan string)
 	c.manage <- &manageRequest{Cmd: cmd, Response: respchan}
