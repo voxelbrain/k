@@ -12,4 +12,4 @@ of namespacing and dependency reduction.
 [2]: http://github.com/bitly/nsq
 [3]: http://github.com/voxelbrain/k
 ---
-Version 0.7
+Version 0.7.1
