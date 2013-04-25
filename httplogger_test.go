@@ -11,14 +11,14 @@ import (
 func TestHTTPLogger(t *testing.T) {
 	testData := []struct {
 		StatusCode int
-		TestData []byte
-		Method string
-		URI string
+		TestData   []byte
+		Method     string
+		URI        string
 	}{
-		{ 200, []byte("hello world"), "GET", "/foobar" },
-		{ 304, []byte("this is just some test data, ignore"), "GET", "/q/x?foo=bar" },
-		{ 404, []byte("Not found"), "GET", "/favicon.ico" },
-		{ 500, []byte("Server Error"), "POST", "/cgi-bin/vintage.pl" },
+		{200, []byte("hello world"), "GET", "/foobar"},
+		{304, []byte("this is just some test data, ignore"), "GET", "/q/x?foo=bar"},
+		{404, []byte("Not found"), "GET", "/favicon.ico"},
+		{500, []byte("Server Error"), "POST", "/cgi-bin/vintage.pl"},
 	}
 
 	for _, data := range testData {

@@ -2,6 +2,7 @@ package k
 
 import (
 	"encoding/json"
+	"math/rand"
 )
 
 // StringArray is an alias for an array of strings
@@ -23,4 +24,18 @@ func (s StringArray) Contains(needle string) bool {
 func (s StringArray) String() string {
 	a, _ := json.Marshal(s)
 	return string(a)
+}
+
+var (
+	alphaNum = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+)
+
+// RandomString generates a random alpha-numeric string
+// of length n
+func RandomString(n int) string {
+	s := make([]byte, 0, n)
+	for i := 0; i < n; i++ {
+		s = append(s, alphaNum[rand.Int63n(int64(len(alphaNum)))])
+	}
+	return string(s)
 }
