@@ -6,4 +6,4 @@ please consult the [included documentation][1].
 
 [1]: http://godoc.org/github.com/voxelbrain/k
 ---
-Version 0.6
+Version 0.7
